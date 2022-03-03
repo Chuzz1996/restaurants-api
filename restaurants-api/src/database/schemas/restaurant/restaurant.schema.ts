@@ -31,7 +31,7 @@ export class Restaurant{
     @Prop({
         type: UserComments
     })
-    comments?: UserComments[];
+    comments: UserComments[];
 
     @Prop({})
     pictures?: string[];

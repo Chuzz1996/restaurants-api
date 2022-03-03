@@ -5,13 +5,13 @@ import { Injectable } from '@nestjs/common';
 import { CategoryI } from '../interface/category/category.interface';
 
 @Injectable()
-export class CategoryRepository{
+export class CategoryRepository {
 
     constructor(@InjectModel(Category.name)
     private readonly categoryModel: Model<CategoryDocument>) {
     }
 
-    async findCategories(): Promise<CategoryI[]>{
+    async findCategories(): Promise<CategoryI[]> {
         return this.categoryModel.find().exec();
     }
 }

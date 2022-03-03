@@ -1,8 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import {RestaurantRepository} from '../../database/repository/restaurant.repository';
+import { RestaurantRepository } from '../../database/repository/restaurant.repository';
 import { PaginationDto } from '../../common/dto/pagination.dto';
 import { RestaurantDetailInterface } from '../../database/interface/restaurant/restaurant-detail.interface';
-import { RestauranteDetailResponse } from '../interface/restaurante-detail-response';
+import { RestaurantDetailResponseI } from '../interface/restaurant-detail-response.interface';
+import { NotFoundException } from '../../exceptions/not-found.exception';
+import { RestaurantInterface } from '../../database/interface/restaurant/restaurant.interface';
+import { CommentDto } from '../dto/comment.dto';
+import { UserRequiredException } from '../../exceptions/user-required.exception';
 
 @Injectable()
 export class RestaurantService {
@@ -10,12 +14,30 @@ export class RestaurantService {
     constructor(private readonly restaurantRepository: RestaurantRepository) {
     }
 
-    async getRestaurants(pagination: PaginationDto, category?: string): Promise<RestauranteDetailResponse>{
-        const restaurantData: RestaurantDetailInterface =  await this.restaurantRepository.findRestaurant(pagination,category);
+    async getRestaurants(pagination: PaginationDto, category?: string[]): Promise<RestaurantDetailResponseI> {
+        const restaurantData: RestaurantDetailInterface[] = await this.restaurantRepository.findRestaurant(pagination, category);
+        if (restaurantData.length === 0) {
+            throw new NotFoundException('restaurants not found');
+        }
         return {
             skip: pagination.skip,
             limit: pagination.limit,
             data: restaurantData,
         }
+    }
+
+    async getRestaurantDetail(restaurantId: string): Promise<RestaurantInterface> {
+        const restaurantData = await this.restaurantRepository.findRestaurantById(restaurantId);
+        if (!restaurantData) {
+            throw new NotFoundException('restaurants not found');
+        }
+        return restaurantData;
+    }
+
+    async addCommentToRestaurant(restaurantId: string, comment: CommentDto): Promise<void> {
+        if (!comment.user) {
+            throw new UserRequiredException('User has to be login');
+        }
+        await this.restaurantRepository.addComment(restaurantId, comment);
     }
 }

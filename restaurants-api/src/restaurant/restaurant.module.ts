@@ -6,10 +6,10 @@ import { RestaurantService } from './service/restaurant.service';
 import { RestaurantRepository } from '../database/repository/restaurant.repository';
 
 @Module({
-    imports:[
+    imports: [
         MongooseModule.forFeature([{ name: Restaurant.name, schema: RestaurantSchema }])
     ],
     controllers: [RestaurantController],
     providers: [RestaurantService, RestaurantRepository],
 })
-export class RestaurantModule {}
+export class RestaurantModule { }

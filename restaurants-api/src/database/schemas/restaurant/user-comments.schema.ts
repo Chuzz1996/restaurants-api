@@ -6,6 +6,9 @@ export class UserComments{
     })
     user: string;
 
-    @Prop({required: true})
+    @Prop({ required: true })
     comment: string;
+
+    @Prop({ required: true })
+    date: string;
 }
