@@ -4,4 +4,8 @@ export class RestaurantDto{
     @IsDefined()
     @IsString()
     restaurantId: string;
+
+    @IsDefined()
+    @IsString()
+    action: string;
 }

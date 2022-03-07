@@ -11,4 +11,7 @@ export class UserComments{
 
     @Prop({ required: true })
     date: string;
+
+    @Prop({default: 0})
+    userQualification: number;
 }

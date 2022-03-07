@@ -15,9 +15,9 @@ export class UserController {
     }
 
     @Patch('/:userId/restaurant/likes')
-    @HttpCode(201)
+    @HttpCode(200)
     async addRestaurant(@Param('userId') userId: string, @Body() restaurant: RestaurantDto) {
-        return await this.userService.addRestaurant(userId, restaurant);
+        return await this.userService.updateFavoriteRestaurant(userId, restaurant);
     }
 
 }

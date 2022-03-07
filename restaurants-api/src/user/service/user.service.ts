@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { RestaurantRepository } from '../../database/repository/restaurant.repository';
 import { UserRepository } from '../../database/repository/user.repository';
-import {NotFoundException} from "../../exceptions/not-found.exception";
-import {RestaurantDto} from "../dto/restaurant.dto";
+import { NotFoundException } from '../../exceptions/not-found.exception';
+import { RestaurantDto } from '../dto/restaurant.dto';
+import { NotModifiedException } from '../../exceptions/not-modified.exception';
 
 @Injectable()
 export class UserService {
@@ -23,8 +24,20 @@ export class UserService {
         return result;
     }
 
-    async addRestaurant(userId: string, restaurant: RestaurantDto){
-        const { restaurantId } = restaurant;
-        await this.userRepository.addRestaurant(userId,restaurantId);
+    async updateFavoriteRestaurant(userId: string, restaurant: RestaurantDto){
+        const { restaurantId, action } = restaurant;
+        let userChange = 0;
+        if(action === 'add'){
+            const existsRestaurant = await this.userRepository.existsRestaurant(userId,restaurantId);
+            if(existsRestaurant){
+                throw new NotModifiedException('No change in user restaurants');
+            }
+            userChange = await this.userRepository.addRestaurant(userId,restaurantId);
+        }else if(action === 'remove'){
+            userChange = await this.userRepository.removeRestaurante(userId,restaurantId);
+        }
+        if(userChange === 0){
+            throw new NotModifiedException('No change in user restaurants');
+        }
     }
 }
