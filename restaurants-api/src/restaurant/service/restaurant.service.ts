@@ -26,7 +26,7 @@ export class RestaurantService {
             skip: pagination.skip,
             limit: pagination.limit,
             data: restaurantData,
-        }
+        };
     }
 
     async getRestaurantDetail(restaurantId: string): Promise<RestaurantInterface> {

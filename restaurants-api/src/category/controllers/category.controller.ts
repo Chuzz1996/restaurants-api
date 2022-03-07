@@ -4,7 +4,7 @@ import { CategoryService } from '../services/category.service';
 import { ApiTags } from '@nestjs/swagger';
 
 
-@ApiTags("category")
+@ApiTags('category')
 @Controller('category')
 export class CategoryController {
 

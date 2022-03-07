@@ -44,4 +44,4 @@ export type RestaurantDocument = Restaurant & Document;
 
 export const RestaurantSchema = SchemaFactory.createForClass(Restaurant);
 
-RestaurantSchema.index({ name: 1, city: 1 }, { unique: true })
+RestaurantSchema.index({ name: 1, city: 1 }, { unique: true });

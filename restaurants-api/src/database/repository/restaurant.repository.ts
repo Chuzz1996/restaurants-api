@@ -22,7 +22,7 @@ export class RestaurantRepository {
                 $match: {
                     categories: { $in: [i] }
                 }
-            }))
+            }));
         }
         aggregate.push(await this.projectDetail());
         return await this.restaurantModel.aggregate(aggregate).skip(pagination.skip).limit(pagination.limit).exec() as RestaurantDetailInterface[];
@@ -46,8 +46,8 @@ export class RestaurantRepository {
     }
 
     async updateCommentStatus(restaurantId: string, commentId: string, qualification: number): Promise<void>{
-        await this.restaurantModel.updateOne({_id:restaurantId, "comments.commentId":commentId},
-            {$inc:{"comments.$.userQualification": qualification}});
+        await this.restaurantModel.updateOne({_id:restaurantId, 'comments.commentId':commentId},
+            {$inc:{'comments.$.userQualification': qualification}});
     }
 
     async findRestaurantDetailsById(restaurants: string[]){
@@ -67,7 +67,7 @@ export class RestaurantRepository {
                     $first: '$pictures'
                 }
             }
-        }
+        };
     }
 
 }

@@ -5,11 +5,11 @@ import { PaginationValidationPipe } from '../../common/pipes/pagination-validati
 import { RestaurantDetailResponseI } from '../interface/restaurant-detail-response.interface';
 import { RestaurantInterface } from '../../database/interface/restaurant/restaurant.interface';
 import { CommentDto } from '../dto/comment.dto';
-import { RestaurantFilterPipe } from "../pipes/restaurant-filter.pipe";
+import { RestaurantFilterPipe } from '../pipes/restaurant-filter.pipe';
 import { ApiTags } from '@nestjs/swagger';
 
 
-@ApiTags("restaurant")
+@ApiTags('restaurant')
 @Controller('restaurant')
 export class RestaurantController {
 

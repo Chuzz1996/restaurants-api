@@ -1,0 +1,36 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "**/tsconfig.json",
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint/eslint-plugin"],
+  "extends": [
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "root": true,
+  "env": {
+    "node": true,
+    "jest": true
+  },
+  "rules": {
+    "quotes": ["error", "single", { "allowTemplateLiterals": true }],
+    "import/order": "off",
+    "max-len": [1, 150],
+    "@typescript-eslint/member-ordering": "off",
+    "@typescript-eslint/interface-name-prefix": "off",
+    "arrow-parens": "off",
+    "sort-keys": "off",
+    "@typescript-eslint/semi": [
+      "error",
+      "always",
+      { "omitLastInOneLineBlock": true }
+    ],
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/no-inferrable-types": "off",
+    "@typescript-eslint/no-unused-vars": "off"
+  }
+}
