@@ -1,7 +1,10 @@
 import { Body, Controller, Get, HttpCode, Param, Patch } from '@nestjs/common';
 import { UserService } from '../service/user.service';
 import { RestaurantDto } from '../dto/restaurant.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+
+@ApiTags('user')
 @Controller('user')
 export class UserController {
 

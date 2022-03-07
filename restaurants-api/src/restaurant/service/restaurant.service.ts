@@ -7,11 +7,14 @@ import { NotFoundException } from '../../exceptions/not-found.exception';
 import { RestaurantInterface } from '../../database/interface/restaurant/restaurant.interface';
 import { CommentDto } from '../dto/comment.dto';
 import { UserRequiredException } from '../../exceptions/user-required.exception';
+import { NotModifiedException } from '../../exceptions/not-modified.exception';
+import { UserRepository } from '../../database/repository/user.repository';
 
 @Injectable()
 export class RestaurantService {
 
-    constructor(private readonly restaurantRepository: RestaurantRepository) {
+    constructor(private readonly restaurantRepository: RestaurantRepository,
+                private readonly userRepository: UserRepository,) {
     }
 
     async getRestaurants(pagination: PaginationDto, category?: string[]): Promise<RestaurantDetailResponseI> {
@@ -38,6 +41,25 @@ export class RestaurantService {
         if (!comment.user) {
             throw new UserRequiredException('User has to be login');
         }
-        await this.restaurantRepository.addComment(restaurantId, comment);
+        let userId;
+        try{
+            userId = await this.userRepository.findUserById(comment.user);
+        }catch (e){
+            console.log(e.message);
+        }
+        if(!userId){
+            throw new UserRequiredException('User has to be login');
+        }
+        if(comment.action === 'add'){
+            await this.restaurantRepository.addComment(restaurantId, comment);
+        }else if(comment.commentId && (comment.action === 'like' || comment.action === 'unlike')){
+            if(comment.action === 'like'){
+                await this.restaurantRepository.updateCommentStatus(restaurantId,comment.commentId,1);
+            }else if(comment.action === 'unlike'){
+                await this.restaurantRepository.updateCommentStatus(restaurantId,comment.commentId,-1);
+            }
+        }else{
+            throw new NotModifiedException('Comment dont added');
+        }
     }
 }

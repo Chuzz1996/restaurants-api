@@ -5,7 +5,11 @@ import { PaginationValidationPipe } from '../../common/pipes/pagination-validati
 import { RestaurantDetailResponseI } from '../interface/restaurant-detail-response.interface';
 import { RestaurantInterface } from '../../database/interface/restaurant/restaurant.interface';
 import { CommentDto } from '../dto/comment.dto';
+import { RestaurantFilterPipe } from "../pipes/restaurant-filter.pipe";
+import { ApiTags } from '@nestjs/swagger';
 
+
+@ApiTags("restaurant")
 @Controller('restaurant')
 export class RestaurantController {
 
@@ -16,9 +20,9 @@ export class RestaurantController {
     @HttpCode(200)
     async getRestaurants(
         @Query(new PaginationValidationPipe()) pagination: PaginationDto,
-        @Query('category') category?: string,
+        @Query(new RestaurantFilterPipe()) category?: string[],
     ): Promise<RestaurantDetailResponseI> {
-        return this.restaurantService.getRestaurants(pagination, [category]);
+        return this.restaurantService.getRestaurants(pagination, category);
     }
 
     @Get('/:restaurantId')
@@ -28,7 +32,7 @@ export class RestaurantController {
     }
 
     @Patch('/:restaurantId/comment')
-    @HttpCode(201)
+    @HttpCode(200)
     async addComment(@Param('restaurantId') restaurantId: string,
         @Body() comment: CommentDto): Promise<void> {
         await this.restaurantService.addCommentToRestaurant(restaurantId, comment);

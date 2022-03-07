@@ -30,4 +30,8 @@ export class UserRepository {
         return await this.userModel.findOne({_id:userId,restaurant:{$in:[restaurant]}},{_id:1}).exec();
     }
 
+    async findUserById(userId: string){
+        return await this.userModel.findOne({_id:userId},{_id:1});
+    }
+
 }

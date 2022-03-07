@@ -5,7 +5,16 @@ export class CommentDto{
     @IsString()
     user: string;
 
+    @IsString()
+    comment?: string;
+
+    @IsString()
+    commentId?: string;
+
     @IsDefined()
     @IsString()
-    comment: string;
+    action: string;
+
+    @IsString()
+    qualification?: number;
 }
