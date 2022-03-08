@@ -13,7 +13,7 @@ export class CategoryController {
 
     @Get('/')
     @HttpCode(200)
-    async getCategories(): Promise<CategoryI[]>{
+    async getCategories(): Promise<CategoryI[]> {
         return this.categoryService.findCategories();
     }
 }

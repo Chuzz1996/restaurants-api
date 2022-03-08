@@ -1,6 +1,7 @@
 import { IsDefined, IsString } from 'class-validator';
 
-export class CommentDto{
+export class CommentDto {
+    
     @IsDefined()
     @IsString()
     user: string;

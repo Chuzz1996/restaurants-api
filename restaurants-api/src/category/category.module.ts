@@ -6,10 +6,10 @@ import { CategoryService } from './services/category.service';
 import { CategoryRepository } from '../database/repository/category.repository';
 
 @Module({
-    imports:[
+    imports: [
         MongooseModule.forFeature([{ name: Category.name, schema: CategorySchema }])
     ],
     controllers: [CategoryController],
     providers: [CategoryService, CategoryRepository],
 })
-export class CategoryModule {}
+export class CategoryModule { }

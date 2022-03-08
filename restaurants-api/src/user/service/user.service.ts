@@ -9,34 +9,34 @@ import { NotModifiedException } from '../../exceptions/not-modified.exception';
 export class UserService {
 
     constructor(private readonly userRepository: UserRepository,
-                private readonly restaurantRepository: RestaurantRepository) {
+        private readonly restaurantRepository: RestaurantRepository) {
     }
 
-    async findRestaurant(userId: string){
+    async findRestaurant(userId: string) {
         const { restaurant } = await this.userRepository.getRestaurants(userId);
-        if(restaurant.length === 0){
+        if (restaurant.length === 0) {
             throw new NotFoundException('restaurants not found');
         }
         const result = await this.restaurantRepository.findRestaurantDetailsById(restaurant);
-        if(!result){
+        if (!result) {
             throw new NotFoundException('restaurants not found');
         }
         return result;
     }
 
-    async updateFavoriteRestaurant(userId: string, restaurant: RestaurantDto){
+    async updateFavoriteRestaurant(userId: string, restaurant: RestaurantDto) {
         const { restaurantId, action } = restaurant;
         let userChange = 0;
-        if(action === 'add'){
-            const existsRestaurant = await this.userRepository.existsRestaurant(userId,restaurantId);
-            if(existsRestaurant){
+        if (action === 'add') {
+            const existsRestaurant = await this.userRepository.existsRestaurant(userId, restaurantId);
+            if (existsRestaurant) {
                 throw new NotModifiedException('No change in user restaurants');
             }
-            userChange = await this.userRepository.addRestaurant(userId,restaurantId);
-        }else if(action === 'remove'){
-            userChange = await this.userRepository.removeRestaurante(userId,restaurantId);
+            userChange = await this.userRepository.addRestaurant(userId, restaurantId);
+        } else if (action === 'remove') {
+            userChange = await this.userRepository.removeRestaurante(userId, restaurantId);
         }
-        if(userChange === 0){
+        if (userChange === 0) {
             throw new NotModifiedException('No change in user restaurants');
         }
     }

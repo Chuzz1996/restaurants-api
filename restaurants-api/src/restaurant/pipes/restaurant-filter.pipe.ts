@@ -4,7 +4,7 @@ import { PipeTransform, Injectable, ArgumentMetadata } from '@nestjs/common';
 export class RestaurantFilterPipe implements PipeTransform {
 
     async transform(value: any, metadata: ArgumentMetadata): Promise<any> {
-        if(value?.category){
+        if (value?.category) {
             value.category = value.category.split(',');
             return value.category;
         }

@@ -1,7 +1,7 @@
 import { CommentsI } from './comments.interface';
 import { PointLocationI } from './point-location.interface';
 
-export interface RestaurantInterface{
+export interface RestaurantInterface {
     _id: string;
     name: string;
     categories: string[];

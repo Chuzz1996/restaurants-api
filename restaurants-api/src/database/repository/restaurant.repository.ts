@@ -18,7 +18,7 @@ export class RestaurantRepository {
     async findRestaurant(pagination: PaginationDto, category?: string[]): Promise<RestaurantDetailInterface[]> {
         const aggregate = [];
         if (category) {
-            category.map(i=>aggregate.push({
+            category.map(i => aggregate.push({
                 $match: {
                     categories: { $in: [i] }
                 }
@@ -45,18 +45,18 @@ export class RestaurantRepository {
         }).exec();
     }
 
-    async updateCommentStatus(restaurantId: string, commentId: string, qualification: number): Promise<void>{
-        await this.restaurantModel.updateOne({_id:restaurantId, 'comments.commentId':commentId},
-            {$inc:{'comments.$.userQualification': qualification}});
+    async updateCommentStatus(restaurantId: string, commentId: string, qualification: number): Promise<void> {
+        await this.restaurantModel.updateOne({ _id: restaurantId, 'comments.commentId': commentId },
+            { $inc: { 'comments.$.userQualification': qualification } });
     }
 
-    async findRestaurantDetailsById(restaurants: string[]){
+    async findRestaurantDetailsById(restaurants: string[]) {
         return await this.restaurantModel.aggregate([{
-            $match:{ _id: { $in: restaurants }}
-        },await this.projectDetail()]).exec();
+            $match: { _id: { $in: restaurants } }
+        }, await this.projectDetail()]).exec();
     }
 
-    private async projectDetail(){
+    private async projectDetail() {
         return {
             $project: {
                 name: 1,

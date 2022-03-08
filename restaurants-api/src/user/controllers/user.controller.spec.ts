@@ -20,19 +20,19 @@ describe('UserController', () => {
   });
 
   it('should by find their favourite restaurants', async () => {
-      expect(await userController.getRestaurant('userId')).toBeDefined();
+    expect(await userController.getRestaurant('userId')).toBeDefined();
   });
 
-  it('should be add my favorite restaurant',async ()=>{
-    await userController.addRestaurant('userId',{
+  it('should be add my favorite restaurant', async () => {
+    await userController.addRestaurant('userId', {
       action: 'add',
       restaurantId: '12345'
     });
     expect(userService.updateFavoriteRestaurant).toBeCalled();
   });
 
-  it('should be remove my favorite restaurant',async ()=>{
-    await userController.addRestaurant('userId',{
+  it('should be remove my favorite restaurant', async () => {
+    await userController.addRestaurant('userId', {
       action: 'remove',
       restaurantId: '12345'
     });

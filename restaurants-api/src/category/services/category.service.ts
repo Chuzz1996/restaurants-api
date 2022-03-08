@@ -9,9 +9,9 @@ export class CategoryService {
     constructor(private readonly categoryRepository: CategoryRepository) {
     }
 
-    async findCategories():Promise<CategoryI[]>{
+    async findCategories(): Promise<CategoryI[]> {
         const result = await this.categoryRepository.findCategories();
-        if(!result){
+        if (!result) {
             throw new NotFoundException('Not found categories');
         }
         return result;

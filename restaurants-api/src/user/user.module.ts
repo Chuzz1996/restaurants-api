@@ -15,4 +15,4 @@ import { Restaurant, RestaurantSchema } from '../database/schemas/restaurant/res
   controllers: [UserController],
   providers: [UserService, UserRepository, RestaurantRepository]
 })
-export class UserModule {}
+export class UserModule { }

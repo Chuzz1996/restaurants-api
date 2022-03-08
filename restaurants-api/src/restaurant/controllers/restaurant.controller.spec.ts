@@ -18,26 +18,26 @@ describe('RestaurantController', () => {
     expect(restaurantController).toBeDefined();
   });
 
-  it('should be get restaurant by filter', async() => {
-    const result = await restaurantController.getRestaurants({skip:1,limit:2},['testcategory']);
+  it('should be get restaurant by filter', async () => {
+    const result = await restaurantController.getRestaurants({ skip: 1, limit: 2 }, ['testcategory']);
     expect(result).toBeDefined();
     expect(restaurantService.getRestaurants).toBeCalled();
   });
 
-  it('should be get restaurant by filter', async() => {
-    const result = await restaurantController.getRestaurants({skip:1,limit:2},['testcategory']);
+  it('should be get restaurant by filter', async () => {
+    const result = await restaurantController.getRestaurants({ skip: 1, limit: 2 }, ['testcategory']);
     expect(result).toBeDefined();
     expect(restaurantService.getRestaurants).toBeCalled();
   });
 
-  it('should be get restaurant details', async() => {
+  it('should be get restaurant details', async () => {
     const result = await restaurantController.getDataRestaurant('12345');
     expect(result).toBeDefined();
     expect(restaurantService.getRestaurantDetail).toBeCalled();
   });
 
-  it('should be add restaurant comment', async() => {
-    await restaurantController.addComment('12345',{comment:'cool',action:'add',user:'12345'});
+  it('should be add restaurant comment', async () => {
+    await restaurantController.addComment('12345', { comment: 'cool', action: 'add', user: '12345' });
     expect(restaurantService.addCommentToRestaurant).toBeCalled();
   });
 

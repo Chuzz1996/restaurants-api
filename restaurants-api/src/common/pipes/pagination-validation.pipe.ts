@@ -13,7 +13,7 @@ export class PaginationValidationPipe implements PipeTransform {
         };
         pagination.skip = parseInt(value.skip) || 0;
         pagination.limit = parseInt(value.limit) || 10;
-        if(value.skip >= value.limit){
+        if (value.skip >= value.limit) {
             pagination.limit += 10;
         }
         return pagination;
