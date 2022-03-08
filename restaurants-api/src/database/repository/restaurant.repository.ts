@@ -29,30 +29,48 @@ export class RestaurantRepository {
     }
 
     async findRestaurantById(restaurantId: string): Promise<RestaurantInterface> {
-        return await this.restaurantModel.findOne({ _id: restaurantId }).exec() as RestaurantInterface;
+        return await this.restaurantModel.findOne({
+            _id: restaurantId
+        }).exec() as RestaurantInterface;
     }
 
     async addComment(restaurantId: string, comment: CommentDto): Promise<void> {
         const currentDate = new Date();
         const commentId = uuid();
-        await this.restaurantModel.updateOne({ _id: restaurantId }, {
+        await this.restaurantModel.updateOne({
+            _id: restaurantId
+        }, {
             $push: {
                 comments: {
-                    user: comment.user, comment: comment.comment, date: currentDate.toISOString().substring(0, 10),
-                    commentId: commentId, userQualification: 0
+                    user: comment.user,
+                    comment: comment.comment,
+                    date: currentDate.toISOString().substring(0, 10),
+                    commentId: commentId,
+                    userQualification: 0
                 }
             }
         }).exec();
     }
 
     async updateCommentStatus(restaurantId: string, commentId: string, qualification: number): Promise<void> {
-        await this.restaurantModel.updateOne({ _id: restaurantId, 'comments.commentId': commentId },
-            { $inc: { 'comments.$.userQualification': qualification } });
+        await this.restaurantModel.updateOne({
+            _id: restaurantId,
+            'comments.commentId': commentId
+        },
+            {
+                $inc: {
+                    'comments.$.userQualification': qualification
+                }
+            });
     }
 
     async findRestaurantDetailsById(restaurants: string[]) {
         return await this.restaurantModel.aggregate([{
-            $match: { _id: { $in: restaurants } }
+            $match: {
+                _id: {
+                    $in: restaurants
+                }
+            }
         }, await this.projectDetail()]).exec();
     }
 
