@@ -1,18 +1,24 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { CategoryController } from './category.controller';
+import { CategoryService } from '../services/category.service';
 
 describe('CategoryController', () => {
-  let controller: CategoryController;
+  let categoryController: CategoryController;
+
+  const categoryService = {
+    findCategories: jest.fn().mockResolvedValue({}),
+  };
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [CategoryController],
-    }).compile();
-
-    controller = module.get<CategoryController>(CategoryController);
+    categoryController = new CategoryController(categoryService as unknown as CategoryService);
   });
 
   it('should be defined', () => {
-    expect(controller).toBeDefined();
+    expect(categoryController).toBeDefined();
+  });
+
+  it('should be defined', async () => {
+    const result = await categoryController.getCategories();
+    expect(result).toBeDefined();
+    expect(categoryService.findCategories).toBeCalled();
   });
 });

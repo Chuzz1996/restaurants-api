@@ -19,6 +19,7 @@ export default {
         '!**/*.configuration.ts',
         '!**/*.exception.ts',
         '!**/index.ts',
+        '!**/*.pipe.ts',
     ],
     coverageThreshold: {
         global: {

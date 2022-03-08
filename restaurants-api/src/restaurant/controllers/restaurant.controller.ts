@@ -1,7 +1,7 @@
 import { Body, Controller, Get, HttpCode, Param, Patch, Query } from '@nestjs/common';
 import { RestaurantService } from '../service/restaurant.service';
 import { PaginationDto } from '../../common/dto/pagination.dto';
-import { PaginationValidationPipe } from '../../common/pipes/pagination-validation';
+import { PaginationValidationPipe } from '../../common/pipes/pagination-validation.pipe';
 import { RestaurantDetailResponseI } from '../interface/restaurant-detail-response.interface';
 import { RestaurantInterface } from '../../database/interface/restaurant/restaurant.interface';
 import { CommentDto } from '../dto/comment.dto';
