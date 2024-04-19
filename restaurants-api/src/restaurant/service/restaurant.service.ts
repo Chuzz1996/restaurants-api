@@ -9,12 +9,17 @@ import { CommentDto } from '../dto/comment.dto';
 import { UserRequiredException } from '../../exceptions/user-required.exception';
 import { NotModifiedException } from '../../exceptions/not-modified.exception';
 import { UserRepository } from '../../database/repository/user.repository';
+import { CreateRestaurantDto } from "../dto/add-restaurant.dto";
 
 @Injectable()
 export class RestaurantService {
 
     constructor(private readonly restaurantRepository: RestaurantRepository,
         private readonly userRepository: UserRepository,) {
+    }
+
+    async addRestaurant(restaurant: CreateRestaurantDto): Promise<void> {
+        await this.restaurantRepository.addRestaurant(restaurant);
     }
 
     async getRestaurants(pagination: PaginationDto, category?: string[]): Promise<RestaurantDetailResponseI> {
@@ -59,7 +64,7 @@ export class RestaurantService {
                 await this.restaurantRepository.updateCommentStatus(restaurantId, comment.commentId, -1);
             }
         } else {
-            throw new NotModifiedException('Comment dont added');
+            throw new NotModifiedException('Comment cant be added');
         }
     }
 }

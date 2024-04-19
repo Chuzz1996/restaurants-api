@@ -1,43 +1,20 @@
 version: '3.8'
 
 services:
-  dev:
-    container_name: bogotaeats_restaurant_api_dev
-    image: bogotaeats-restaurant-api-dev:1.0.0
-    build:
-      context: .
-      target: development
-      dockerfile: ./Dockerfile
-    command: npm run start:debug
+  mongodb-database:
+    container_name: restaurants-db
+    image: mongo:6.0.6
     ports:
-      - 3000:3000
-      - 9229:9229
-    env_file:
-      - ./.env
-      - ./docker.env
-    networks:
-      - nesjs-network
+      - '27017:27017'
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=mongoDev
+      - MONGO_INITDB_ROOT_PASSWORD=Passw0rd
+      - MONGO_INITDB_DATABASE=restaurants
     volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
-    restart: unless-stopped
-  prod:
-    container_name: bogotaeats_restaurant_api_prod
-    image: bogotaeats-restaurant-api-prod:1.0.0
-    build:
-      context: .
-      target: production
-      dockerfile: ./Dockerfile
-    command: npm run start:prod
-    ports:
-      - 3000:3000
-      - 9229:9229
-    networks:
-      - nesjs-network
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
-    restart: unless-stopped
+      - dev-db:/data/db
 
 networks:
   nesjs-network:
+
+volumes:
+  dev-db:

@@ -7,6 +7,7 @@ import { RestaurantDetailInterface } from '../interface/restaurant/restaurant-de
 import { RestaurantInterface } from '../interface/restaurant/restaurant.interface';
 import { CommentDto } from '../../restaurant/dto/comment.dto';
 import { v4 as uuid } from 'uuid';
+import {CreateRestaurantDto} from "../../restaurant/dto/add-restaurant.dto";
 
 @Injectable()
 export class RestaurantRepository {
@@ -72,6 +73,11 @@ export class RestaurantRepository {
                 }
             }
         }, await this.projectDetail()]).exec();
+    }
+
+    async addRestaurant(restaurant: CreateRestaurantDto): Promise<void> {
+        const newRestaurant = new this.restaurantModel(restaurant);
+        await newRestaurant.save();
     }
 
     private async projectDetail() {

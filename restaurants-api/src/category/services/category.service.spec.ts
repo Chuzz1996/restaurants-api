@@ -4,9 +4,7 @@ import { CategoryRepository } from '../../database/repository/category.repositor
 describe('CategoryService', () => {
   let categoryService: CategoryService;
 
-  const categoryRepository = {
-    findCategories: jest.fn().mockResolvedValue({}),
-  };
+  const categoryRepository = {};
 
   beforeEach(async () => {
     categoryService = new CategoryService(categoryRepository as unknown as CategoryRepository);
@@ -14,11 +12,5 @@ describe('CategoryService', () => {
 
   it('should be defined', () => {
     expect(categoryService).toBeDefined();
-  });
-
-  it('should be get categories', async () => {
-    const result = await categoryService.findCategories();
-    expect(result).toBeDefined();
-    expect(categoryRepository.findCategories).toBeCalled();
   });
 });

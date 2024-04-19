@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, Param, Patch, Query } from '@nestjs/common';
+import {Body, Controller, Get, HttpCode, Param, Patch, Post, Query} from '@nestjs/common';
 import { RestaurantService } from '../service/restaurant.service';
 import { PaginationDto } from '../../common/dto/pagination.dto';
 import { PaginationValidationPipe } from '../../common/pipes/pagination-validation.pipe';
@@ -7,6 +7,7 @@ import { RestaurantInterface } from '../../database/interface/restaurant/restaur
 import { CommentDto } from '../dto/comment.dto';
 import { RestaurantFilterPipe } from '../pipes/restaurant-filter.pipe';
 import { ApiTags } from '@nestjs/swagger';
+import {CreateRestaurantDto} from "../dto/add-restaurant.dto";
 
 
 @ApiTags('restaurant')
@@ -23,6 +24,12 @@ export class RestaurantController {
         @Query(new RestaurantFilterPipe()) category?: string[],
     ): Promise<RestaurantDetailResponseI> {
         return this.restaurantService.getRestaurants(pagination, category);
+    }
+
+    @Post()
+    @HttpCode(201)
+    async addRestaurant(@Body() restaurant: CreateRestaurantDto) {
+        return this.restaurantService.addRestaurant(restaurant);
     }
 
     @Get('/:restaurantId')

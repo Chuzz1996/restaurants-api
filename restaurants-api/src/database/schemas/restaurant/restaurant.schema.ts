@@ -36,7 +36,7 @@ export class Restaurant{
     @Prop({})
     pictures?: string[];
 
-    @Prop({ required:true })
+    @Prop({ required: true })
     city: string;
 }
 

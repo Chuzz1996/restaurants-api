@@ -1,8 +1,21 @@
-#Bogotaeats-restaurant-api
+# Bogotaeats-restaurant-api
 
 ## Description
 
 Bogotaeats restaurant api; running at nestjs
+
+## start database
+
+```bash
+$ docker-compose up -d
+```
+
+## enviroment credentials
+
+```bash
+$ PORT=3001
+$ MONGO_RESTAURANT_DB='mongodb://mongoDev:Passw0rd@localhost:27017/?authSource=admin'
+```
 
 ## Installation
 
